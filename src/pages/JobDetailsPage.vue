@@ -22,7 +22,7 @@ export default {
     onMounted(async () => {
       try {
         logger.log(route.params);
-        await jobsService.getById(route.params.id);
+        await jobsService.getJobById(route.params.id);
       } catch (error) {
         logger.log(error);
         Pop.toast(error.message, "error");

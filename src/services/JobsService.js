@@ -9,8 +9,8 @@ class JobsService {
     AppState.jobs = res.data
   }
 
-  async getJobById() {
-    const res = await api.get('api/houses/' + id)
+  async getJobById(id) {
+    const res = await api.get('api/jobs/' + id)
     logger.log('[get job by id]', res.data)
     AppState.activeJobs = res.data
   }

@@ -1,5 +1,21 @@
 <template>
   <div class="container-fluid">
+    <b
+      title="Create Car"
+      class="
+        create-btn
+        btn btn-success
+        rounded-pill
+        shadow
+        d-flex
+        align-items-center
+        justify-content-center
+      "
+      data-bs-toggle="modal"
+      data-bs-target="#form-modal"
+    >
+      <i class="mdi mdi-plus"></i>
+    </b>
     <div class="row mt-3 bg-light shadow p-4 selectable">
       <div v-for="j in jobs" :key="j.id" class="col-4">
         <Job :job="j" />
