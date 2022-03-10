@@ -6,15 +6,26 @@
       class="row mt-3 bg-light shadow p-4 selectable"
     >
       <House :house="h" />
-      <!-- <div class="row mt-3 bg-light shadow p-4">
-      <div class="col-3">
-        <img src="https://thiscatdoesnotexist.com" class="img-fluid" alt="" />
-      </div>
-    </div> -->
     </div>
+    <b
+      title="Create Car"
+      class="
+        create-btn
+        btn btn-success
+        rounded-pill
+        shadow
+        d-flex
+        align-items-center
+        justify-content-center
+      "
+      data-bs-toggle="modal"
+      data-bs-target="#form-modal"
+    >
+      <i class="mdi mdi-plus"></i>
+    </b>
     <Modal>
       <template #modal-title>Choose a House</template>
-      <template #modal-body></template>
+      <template #modal-body><HouseForm /></template>
     </Modal>
   </div>
 </template>
@@ -46,4 +57,13 @@ export default {
 
 
 <style lang="scss" scoped>
+.create-btn {
+  font-size: 20px;
+  height: 60px;
+  width: 60px;
+  z-index: 100;
+  position: fixed;
+  bottom: 10vh;
+  right: 5vh;
+}
 </style>

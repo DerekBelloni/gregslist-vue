@@ -2,23 +2,35 @@
   <form>
     <div class="form-group">
       <label for="levels" class="">Levels:</label>
-      <select
+      <input
         v-model="editable.levels"
         name="levels"
         id="levels"
         required
         class="form-control"
-      ></select>
+      />
     </div>
     <div class="form-group">
       <label for="Bedrooms" class="">Bedrooms:</label>
       <input
-        v-model="editable.model"
-        placeholder="Bedrooms"
+        v-model="editable.bedrooms"
+        placeholder="bedrooms"
         type="text"
         class="form-control"
-        name="Bedrooms"
-        id="Bedrooms"
+        name="bedrooms"
+        id="bedrooms"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="bathrooms" class="">Bathrooms:</label>
+      <input
+        v-model="editable.bathrooms"
+        placeholder="bathrooms"
+        type="text"
+        class="form-control"
+        name="bathrooms"
+        id="bathrooms"
         required
       />
     </div>
@@ -40,10 +52,21 @@
       <input
         v-model="editable.levels"
         placeholder="levels"
-        type="levels"
+        type="number"
         class="form-control"
         name="levels"
         id="levels"
+      />
+    </div>
+    <div class="form-group">
+      <label for="year" class="">Year:</label>
+      <input
+        v-model="editable.year"
+        placeholder="year"
+        type="number"
+        class="form-control"
+        name="year"
+        id="year"
       />
     </div>
     <div class="form-group">
@@ -80,16 +103,14 @@
         <b> cancel </b>
       </button>
       <button
-        v-if="!carData.id"
-        @click="createCar"
+        @click="createHouse"
         type="button"
         class="btn btn-success text-dark text-uppercase selectable"
       >
         <b> Choose a House </b>
       </button>
       <button
-        v-else
-        @click="editCar"
+        @click="editHouse"
         type="button"
         class="btn btn-info text-warning text-uppercase selectable"
       >
@@ -101,8 +122,12 @@
 
 
 <script>
-import { watchEffect } from "@vue/runtime-core";
+import { ref, watchEffect } from "@vue/runtime-core";
 import { logger } from "../utils/Logger";
+import { useRouter } from "vue-router";
+import { housesService } from "../services/HousesService";
+import Pop from "../utils/Pop";
+import { Modal } from "bootstrap";
 export default {
   props: {
     houseData: {
@@ -116,10 +141,40 @@ export default {
     const router = useRouter();
     watchEffect(() => {
       logger.log("change happened re-running watch effect");
-      editable.value = props.carData;
+      editable.value = props.houseData;
     });
 
-    return {};
+    return {
+      editable,
+      async createHouse() {
+        try {
+          logger.log("editable before service", editable.value);
+          let newHouse = await housesService.create(editable.value);
+          editable.value = {};
+          Modal.getOrCreateInstance(
+            document.getElementById("form-modal")
+          ).hide();
+          // router.push({
+          //   name: "HouseDetails",
+          //   params: { id: newHouse.id },
+          // });
+        } catch (error) {
+          logger.error(error);
+          Pop.toast(error.message, "error");
+        }
+      },
+      async editHouse() {
+        try {
+          await housesService.update(editable.value);
+          Modal.getOrCreateInstance(
+            document.getElementById("form-modal")
+          ).hide();
+        } catch (error) {
+          logger.error(error);
+          Pop.toast(error.message, "error");
+        }
+      },
+    };
   },
 };
 </script>

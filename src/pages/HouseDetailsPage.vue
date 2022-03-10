@@ -9,12 +9,22 @@
         <h2>{{ house.year }}</h2>
         <p>{{ house.description }}</p>
         <b>{{ house.price }}</b>
-        <div class="text-end selectable" @click="openModal">
+        <div
+          class="text-end selectable"
+          data-bs-target="#editModal"
+          data-bs-toggle="modal"
+        >
           edit house
           <i class="mdi mdi-pencil"></i>
         </div>
       </div>
     </div>
+    <Modal id="form-modal">
+      <template #modal-title
+        >Edit {{ house.levels }} {{ house.bathrooms }}</template
+      >
+      <template #modal-body><HouseForm :houseData="house" /></template>
+    </Modal>
   </div>
 </template>
 
