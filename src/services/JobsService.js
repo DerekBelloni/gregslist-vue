@@ -8,6 +8,12 @@ class JobsService {
     logger.log('[get all jobs]', res.data)
     AppState.jobs = res.data
   }
+
+  async getJobById() {
+    const res = await api.get('api/houses/' + id)
+    logger.log('[get job by id]', res.data)
+    AppState.activeJobs = res.data
+  }
 }
 
 export const jobsService = new JobsService();

@@ -130,9 +130,7 @@ export default {
     const router = useRouter();
     watchEffect(() => {
       logger.log("change happened re-running watch effect");
-      editable.value = props.carDat;
-
-      a;
+      editable.value = props.carData;
     });
     return {
       editable,
